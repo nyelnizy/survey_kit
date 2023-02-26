@@ -113,7 +113,6 @@ class _SurveyKitState extends State<SurveyKit> {
             appBar: widget.appBar,
             titleWidget: widget.titleWidget,
             cancelWidget: widget.cancelWidget,
-            surveyController: widget.surveyController,
           ),
         ),
       ),
@@ -127,7 +126,6 @@ class SurveyPage extends StatefulWidget {
   final Function(SurveyResult) onResult;
   final Widget? titleWidget;
   final Widget? cancelWidget;
-  final SurveyController? surveyController;
 
   const SurveyPage({
     required this.length,
@@ -135,7 +133,6 @@ class SurveyPage extends StatefulWidget {
     this.appBar,
     this.titleWidget,
     this.cancelWidget,
-    this.surveyController,
   });
 
   @override
@@ -146,6 +143,10 @@ class _SurveyPageState extends State<SurveyPage>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
 
+  int currentIndex = 0;
+  _goBack(){
+
+  }
   @override
   void initState() {
     tabController = TabController(length: widget.length, vsync: this);
@@ -168,17 +169,16 @@ class _SurveyPageState extends State<SurveyPage>
         }
         if (state is PresentingSurveyState) {
           tabController.animateTo(state.currentStepIndex);
+          currentIndex = state.currentStepIndex;
         }
       },
       builder: (BuildContext context, SurveyState state) {
         if (state is PresentingSurveyState) {
           return WillPopScope(
             onWillPop: ()async{
-               print("step back -------------------");
+              print("current index ------------------------ ${currentIndex}");
               if(state.appBarConfiguration.canBack!){
-                print("Siaaaa---------- back -------------------");
-                widget.surveyController!.stepBack(context: context);
-                print("Siaaa ----------------------1 back -------------------");
+                tabController.animateTo(currentIndex-1);
                 return false;
               }
               return true;
@@ -196,7 +196,7 @@ class _SurveyPageState extends State<SurveyPage>
                           : SurveyAppBar(
                               appBarConfiguration: state.appBarConfiguration,
                               titleWidget: widget.titleWidget,
-                              cancelWidget: widget.cancelWidget,
+                              cancelWidget: widget.cancelWidget
                             ),
                     )
                   : null,
