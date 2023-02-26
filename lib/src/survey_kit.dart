@@ -169,40 +169,49 @@ class _SurveyPageState extends State<SurveyPage>
       },
       builder: (BuildContext context, SurveyState state) {
         if (state is PresentingSurveyState) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: state.currentStep.showAppBar
-                ? PreferredSize(
-                    preferredSize: Size(
-                      double.infinity,
-                      56.0,
-                    ),
-                    child: widget.appBar != null
-                        ? widget.appBar!.call(state.appBarConfiguration)
-                        : SurveyAppBar(
-                            appBarConfiguration: state.appBarConfiguration,
-                            titleWidget: widget.titleWidget,
-                            cancelWidget: widget.cancelWidget,
-                          ),
-                  )
-                : null,
-            body: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: tabController,
-              children: state.steps
-                  .map(
-                    (e) => Container(
-                      key: ValueKey<String>(
-                        e.stepIdentifier.id,
+          return WillPopScope(
+            onWillPop: ()async{
+              if(state.appBarConfiguration.canBack!){
+                tabController.animateTo(state.currentStepIndex-1);
+                return false;
+              }
+              return true;
+            },
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: state.currentStep.showAppBar
+                  ? PreferredSize(
+                      preferredSize: Size(
+                        double.infinity,
+                        56.0,
                       ),
-                      child: e.createView(
-                        questionResult: state.questionResults.firstWhereOrNull(
-                          (element) => element.id == e.stepIdentifier,
+                      child: widget.appBar != null
+                          ? widget.appBar!.call(state.appBarConfiguration)
+                          : SurveyAppBar(
+                              appBarConfiguration: state.appBarConfiguration,
+                              titleWidget: widget.titleWidget,
+                              cancelWidget: widget.cancelWidget,
+                            ),
+                    )
+                  : null,
+              body: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: tabController,
+                children: state.steps
+                    .map(
+                      (e) => Container(
+                        key: ValueKey<String>(
+                          e.stepIdentifier.id,
+                        ),
+                        child: e.createView(
+                          questionResult: state.questionResults.firstWhereOrNull(
+                            (element) => element.id == e.stepIdentifier,
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
+                    )
+                    .toList(),
+              ),
             ),
           );
         } else if (state is SurveyResultState && state.currentStep != null) {
