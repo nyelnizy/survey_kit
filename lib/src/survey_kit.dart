@@ -113,6 +113,7 @@ class _SurveyKitState extends State<SurveyKit> {
             appBar: widget.appBar,
             titleWidget: widget.titleWidget,
             cancelWidget: widget.cancelWidget,
+            controller: widget.surveyController,
           ),
         ),
       ),
@@ -126,6 +127,7 @@ class SurveyPage extends StatefulWidget {
   final Function(SurveyResult) onResult;
   final Widget? titleWidget;
   final Widget? cancelWidget;
+  final SurveyController? controller;
 
   const SurveyPage({
     required this.length,
@@ -133,6 +135,7 @@ class SurveyPage extends StatefulWidget {
     this.appBar,
     this.titleWidget,
     this.cancelWidget,
+    this.controller,
   });
 
   @override
@@ -172,7 +175,7 @@ class _SurveyPageState extends State<SurveyPage>
           return WillPopScope(
             onWillPop: ()async{
               if(state.appBarConfiguration.canBack!){
-                tabController.animateTo(state.currentStepIndex-1);
+                widget.controller!.stepBack(context: context);
                 return false;
               }
               return true;
