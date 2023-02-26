@@ -8,10 +8,14 @@ import 'package:provider/provider.dart';
 class SurveyAppBar extends StatelessWidget {
   final AppBarConfiguration appBarConfiguration;
   final SurveyController? controller;
+  final Widget? titleWidget;
+  final Widget? cancelWidget;
 
   const SurveyAppBar({
     required this.appBarConfiguration,
     this.controller,
+    this.titleWidget,
+    this.cancelWidget,
   });
 
   @override
@@ -35,11 +39,11 @@ class SurveyAppBar extends StatelessWidget {
                 },
               )
           : Container(),
-      title: _showProgress ? SurveyProgress() : SizedBox.shrink(),
+      title: _showProgress ? widget.titleWidget??SurveyProgress() : SizedBox.shrink(),
       trailingActions: [
         TextButton(
           child: appBarConfiguration.trailing ??
-              Text(
+              widget.cancelWidget??Text(
                 context.read<Map<String, String>?>()?['cancel'] ?? 'Cancel',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,

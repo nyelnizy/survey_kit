@@ -41,6 +41,8 @@ class SurveyKit extends StatefulWidget {
 
   final Map<String, String>? localizations;
 
+  final Widget? titleWidget;
+  final Widget? cancelWidget;
   const SurveyKit({
     required this.task,
     required this.onResult,
@@ -50,6 +52,8 @@ class SurveyKit extends StatefulWidget {
     this.showProgress,
     this.surveyProgressbarConfiguration,
     this.localizations,
+    this.titleWidget,
+    this.cancelWidget,
   });
 
   @override
@@ -117,11 +121,15 @@ class SurveyPage extends StatefulWidget {
   final int length;
   final Widget Function(AppBarConfiguration appBarConfiguration)? appBar;
   final Function(SurveyResult) onResult;
+  final Widget? titleWidget;
+  final Widget? cancelWidget;
 
   const SurveyPage({
     required this.length,
     required this.onResult,
     this.appBar,
+    this.titleWidget,
+    this.cancelWidget,
   });
 
   @override
@@ -170,6 +178,8 @@ class _SurveyPageState extends State<SurveyPage>
                         ? widget.appBar!.call(state.appBarConfiguration)
                         : SurveyAppBar(
                             appBarConfiguration: state.appBarConfiguration,
+                            titleWidget: widget.titleWidget,
+                            cancelWidget: widget.cancelWidget,
                           ),
                   )
                 : null,
