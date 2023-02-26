@@ -89,7 +89,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
               decoration: textFieldInputDecoration(
                 hint: _textAnswerFormat.hint,
               ),
-              maxLines: _textAnswerFormat.maxLines,
+              minLines: 2,
               controller: _controller,
               textAlign: TextAlign.center,
               onChanged: (String text) {

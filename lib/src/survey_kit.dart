@@ -175,7 +175,7 @@ class _SurveyPageState extends State<SurveyPage>
                 ? PreferredSize(
                     preferredSize: Size(
                       double.infinity,
-                      70.0,
+                      56.0,
                     ),
                     child: widget.appBar != null
                         ? widget.appBar!.call(state.appBarConfiguration)
