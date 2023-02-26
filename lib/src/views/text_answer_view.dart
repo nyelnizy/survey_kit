@@ -90,6 +90,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                 hint: _textAnswerFormat.hint,
               ),
               minLines: 2,
+              maxLines: _textAnswerFormat.maxLines,
               controller: _controller,
               textAlign: TextAlign.center,
               onChanged: (String text) {
