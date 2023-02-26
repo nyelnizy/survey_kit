@@ -43,6 +43,7 @@ class SurveyKit extends StatefulWidget {
 
   final Widget? titleWidget;
   final Widget? cancelWidget;
+
   const SurveyKit({
     required this.task,
     required this.onResult,
@@ -110,6 +111,8 @@ class _SurveyKitState extends State<SurveyKit> {
             length: widget.task.steps.length,
             onResult: widget.onResult,
             appBar: widget.appBar,
+            titleWidget: widget.titleWidget,
+            cancelWidget: widget.cancelWidget,
           ),
         ),
       ),
