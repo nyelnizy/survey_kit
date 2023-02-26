@@ -90,6 +90,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
               decoration: textFieldInputDecoration(
                 hint: _textAnswerFormat.hint,
               ),
+              maxLines: _textAnswerFormat.maxLines,
               controller: _controller,
               textAlign: TextAlign.center,
               onChanged: (String text) {

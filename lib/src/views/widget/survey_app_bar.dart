@@ -39,11 +39,11 @@ class SurveyAppBar extends StatelessWidget {
                 },
               )
           : Container(),
-      title: _showProgress ? widget.titleWidget??SurveyProgress() : SizedBox.shrink(),
+      title: _showProgress ? titleWidget??SurveyProgress() : SizedBox.shrink(),
       trailingActions: [
         TextButton(
           child: appBarConfiguration.trailing ??
-              widget.cancelWidget??Text(
+              cancelWidget??Text(
                 context.read<Map<String, String>?>()?['cancel'] ?? 'Cancel',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
