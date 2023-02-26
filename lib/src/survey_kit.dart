@@ -175,7 +175,7 @@ class _SurveyPageState extends State<SurveyPage>
           return WillPopScope(
             onWillPop: ()async{
                print("can go back ------------------- ${state.appBarConfiguration.canBack!}");
-               print("step back ------------------- ${widget.surveyController!.stepBack}");
+               print("step back -------------------");
               if(state.appBarConfiguration.canBack!){
                 widget.surveyController!.stepBack(context: context);
                 return false;
