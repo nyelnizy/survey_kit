@@ -105,7 +105,6 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                   });
                 },
                 inputFormatters: [
-                  FilteringTextInputFormatter.singleLineFormatter,
                   TextCapitalizationFormatter(),
                 ],
                 autocorrect: true,
