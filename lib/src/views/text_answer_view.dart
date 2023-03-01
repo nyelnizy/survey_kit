@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:survey_kit/src/answer_format/text_answer_format.dart';
 import 'package:survey_kit/src/views/decoration/input_decoration.dart';
 import 'package:survey_kit/src/result/question/text_question_result.dart';
@@ -32,7 +33,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
     _controller = TextEditingController();
     _controller.text = widget.result?.result ?? '';
     _textAnswerFormat = widget.questionStep.answerFormat as TextAnswerFormat;
-    _controller.text =_textAnswerFormat.defaultValue ?? '';
+    _controller.text = _textAnswerFormat.defaultValue ?? '';
     _checkValidation(_controller.text);
     _startDate = DateTime.now();
   }
@@ -57,8 +58,8 @@ class _TextAnswerViewState extends State<TextAnswerView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        if(_isKeyboardVisible){
+      onTap: () {
+        if (_isKeyboardVisible) {
           FocusScope.of(context).unfocus();
           _isKeyboardVisible = false;
         }
@@ -98,11 +99,16 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                   hint: _textAnswerFormat.hint,
                 ),
                 minLines: 2,
-                onTap: (){
+                onTap: () {
                   setState(() {
                     _isKeyboardVisible = true;
                   });
                 },
+                inputFormatters: [
+                  FilteringTextInputFormatter.singleLineFormatter,
+                  TextCapitalizationFormatter(),
+                ],
+                autocorrect: true,
                 maxLines: _textAnswerFormat.maxLines,
                 controller: _controller,
                 onChanged: (String text) {
@@ -114,5 +120,32 @@ class _TextAnswerViewState extends State<TextAnswerView> {
         ),
       ),
     );
+  }
+}
+
+class TextCapitalizationFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    final String newString = newValue.text;
+    if (newString == "") {
+      return newValue.copyWith(text: "");
+    } else {
+      final String capitalized = newString
+          .split('. ')
+          .map((sentence) => sentence.trim().capitalize())
+          .join('. ');
+
+      return TextEditingValue(
+        text: capitalized,
+        selection: TextSelection.collapsed(offset: capitalized.length),
+      );
+    }
+  }
+}
+
+extension StringExtensions on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
   }
 }
