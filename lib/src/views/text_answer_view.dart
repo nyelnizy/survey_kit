@@ -104,10 +104,10 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                     _isKeyboardVisible = true;
                   });
                 },
-                inputFormatters: [
-                  // FilteringTextInputFormatter.singleLineFormatter,
-                  TextCapitalizationFormatter(),
-                ],
+                // inputFormatters: [
+                //   // FilteringTextInputFormatter.singleLineFormatter,
+                //   TextCapitalizationFormatter(),
+                // ],
                 autocorrect: true,
                 maxLines: _textAnswerFormat.maxLines,
                 controller: _controller,
