@@ -104,9 +104,10 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                     _isKeyboardVisible = true;
                   });
                 },
-                // inputFormatters: [
-                //   TextCapitalizationFormatter(),
-                // ],
+                inputFormatters: [
+                  FilteringTextInputFormatter.singleLineFormatter,
+                  TextCapitalizationFormatter(),
+                ],
                 autocorrect: true,
                 maxLines: _textAnswerFormat.maxLines,
                 controller: _controller,
@@ -131,7 +132,7 @@ class TextCapitalizationFormatter extends TextInputFormatter {
       return newValue.copyWith(text: "");
     } else {
       final String capitalized = newString
-          .split('. ')
+          .split(RegExp(r'(?<=[\s.])\s*')) // split on periods and whitespace
           .map((sentence) => sentence.trim().capitalize())
           .join('. ');
 
