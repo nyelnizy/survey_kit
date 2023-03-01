@@ -104,9 +104,9 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                     _isKeyboardVisible = true;
                   });
                 },
-                inputFormatters: [
-                  TextCapitalizationFormatter(),
-                ],
+                // inputFormatters: [
+                //   TextCapitalizationFormatter(),
+                // ],
                 autocorrect: true,
                 maxLines: _textAnswerFormat.maxLines,
                 controller: _controller,
