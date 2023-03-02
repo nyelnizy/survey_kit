@@ -104,6 +104,7 @@ class _TextAnswerViewState extends State<TextAnswerView> {
                     _isKeyboardVisible = true;
                   });
                 },
+                textCapitalization: TextCapitalization.sentences,
                 // inputFormatters: [
                 //   // FilteringTextInputFormatter.singleLineFormatter,
                 //   TextCapitalizationFormatter(),
