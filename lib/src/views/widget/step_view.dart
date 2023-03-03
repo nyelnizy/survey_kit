@@ -45,23 +45,40 @@ class StepView extends StatelessWidget {
                 child,
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 32.0),
-                  child: OutlinedButton(
-                    onPressed: isValid || step.isOptional
-                        ? () =>
-                            surveyController.nextStep(context, resultFunction)
-                        : null,
-                    child: Text(
-                      step.buttonText?.toUpperCase() ??
-                          context
-                              .read<Map<String, String>?>()?['next']
-                              ?.toUpperCase() ??
-                          'Next',
-                      style: TextStyle(
-                        color: isValid
-                            ? Theme.of(context).primaryColor
-                            : Colors.grey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () =>
+                            surveyController.closeSurvey(resultFunction: resultFunction, context: context),
+                        child: Text("CANCEL",
+                          style: TextStyle(
+                            color: isValid
+                                ? Theme.of(context).primaryColor
+                                : Colors.grey,
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(width: 10,),
+                      OutlinedButton(
+                        onPressed: isValid || step.isOptional
+                            ? () =>
+                                surveyController.nextStep(context, resultFunction)
+                            : null,
+                        child: Text(
+                          step.buttonText?.toUpperCase() ??
+                              context
+                                  .read<Map<String, String>?>()?['next']
+                                  ?.toUpperCase() ??
+                              'Next',
+                          style: TextStyle(
+                            color: isValid
+                                ? Theme.of(context).primaryColor
+                                : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
