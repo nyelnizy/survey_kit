@@ -59,7 +59,7 @@ class StepView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 20,),
                       OutlinedButton(
                         onPressed: isValid || step.isOptional
                             ? () =>
